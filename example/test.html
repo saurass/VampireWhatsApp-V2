@@ -1,0 +1,52 @@
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
+<script src="custom.js"></script>
+
+<div>
+	<h1>Send Text Messages</h1>
+	<table>
+		<tr>
+			<th>Mobile Number</th>
+			<td><input type="text" name="mobile" id="mn"></td>
+		</tr>
+		<tr>
+			<th>Message</th>
+			<td><textarea id="msg">Hey Saurass</textarea></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button onclick="sendTextMessage();">Send this text</button></td>
+		</tr>
+	</table>
+</div>
+<hr>
+<div>
+	<h1>Send Files</h1>
+	<table>
+		<tr>
+			<th>Mobile Number</th>
+			<td><input type="text" name="mobile" id="mnf"></td>
+		</tr>
+		<tr>
+			<th>Link of file</th>
+			<td><input type="text" name="link" id="link"></td>
+		</tr>
+		<tr>
+			<th>Type</th>
+			<td><input type="text" name="type" id="type"></td>
+		</tr>
+		<tr>
+			<th>Caption</th>
+			<td><input type="text" name="caption" id="caption"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button onclick="sendFileMessage();">Send this file</button></td>
+		</tr>
+	</table>
+</div>
+<hr>
+<div>
+	<center><h1>Unread Messages</h1></center>
+	<div id="msgss" style="width: 90%;margin-left: 5%"></div>
+</div>

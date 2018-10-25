@@ -1,0 +1,31 @@
+{
+  "name": "vampirewhatsapp",
+  "version": "1.0.0",
+  "description": "A driver\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[CWeb\u001b[C\u001b[D\u001b[1;2C\u001b[1;2CDriver for whatsapp-web. Send both files and text.\u001b[D.\u001b[D messages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pkgall": "pkg index.js --targets node9-win-x64 -o vampirewhatsapp.exe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saurass/VampireWhatsapp.git"
+  },
+  "keywords": [
+    "VampireWhatsApp"
+  ],
+  "author": "saurass",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saurass/VampireWhatsapp/issues"
+  },
+  "homepage": "https://github.com/saurass/VampireWhatsapp#readme",
+  "dependencies": {
+    "download-file": "^0.1.5",
+    "express": "^4.16.3",
+    "filedownloader": "^1.2.7",
+    "pusher-js": "^4.2.2",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "socket.io": "^2.1.1"
+  }
+}
