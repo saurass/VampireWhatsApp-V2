@@ -1389,3 +1389,8 @@ window.WAPI.demoteParticipantAdminGroup = function(idGroup, idParticipant, done)
     })
     
 }
+
+window.WAPI.getQRcodesrc = function(done) {
+	var src = document.getElementsByTagName('img')[0].src;
+    done(src);
+}

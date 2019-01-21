@@ -91,6 +91,17 @@ io.on('connection', socket => {
     socket.on('send_seen_reply', msg => {
         sendSeenNotification(msg);
     });
+
+    /*
+    |-------------------------------------------------------------
+    |   ~  to get QR code
+    |-------------------------------------------------------------
+    */
+    socket.on('get_QR_code', () => {
+        getQRCode(data => {
+            io.emit('get_QR_code_response', data);
+        });
+    });
 });
 
 /*
@@ -224,6 +235,18 @@ function getUnreadReplies(done) {
             done(unread_data);
         else
             return unread_data;
+    });
+}
+
+/*
+|=================================================================
+|   +  To get QR code 'get_QR_code_response' event
+|=================================================================
+*/
+function getQRCode(done) {
+    var scriptToGetQRcode = "var callback = arguments[arguments.length - 1];window.WAPI.getQRcodesrc(function(data){callback(data);})";
+    var r = driver.executeAsyncScript(scriptToGetQRcode).then(data => {
+        done(data);
     });
 }
 

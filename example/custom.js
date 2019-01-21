@@ -1,5 +1,11 @@
 const socket = io('http://localhost:3000');
 
+function getQRcode(){
+	socket.emit("get_QR_code", {
+		payload: "NOT REQUIRED"
+	});
+}
+
 function sendTextMessage(){
 	socket.emit("send_text_message", {
 		message: document.getElementById('msg').value,
@@ -44,9 +50,17 @@ function displayUnread(data){
 	document.getElementById('msgss').innerHTML = html;
 }
 
+function displayQRcode(data) {
+	document.getElementById("qr_img").src = data;
+}
+
 socket.on("get_unread_response", (data) => {
 	displayUnread(data);
 });
+
+socket.on("get_QR_code_response", (data) => {
+	displayQRcode(data);
+})
 
 setInterval(() => {
 	getUnreadReplies();
