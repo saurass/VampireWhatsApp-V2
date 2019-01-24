@@ -14,9 +14,13 @@ const Webdriver = require("selenium-webdriver");
 const By = Webdriver.By;
 const until = Webdriver.until;
 const fs = require("fs");
-const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const express = require('express');
+const socketIO = require('socket.io');
+const path = require('path');
+
+
+const port  = process.env.PORT || 3000;
+const INDEX = path.join(__dirname, 'example/test.html');
 
 /*
 |=================================================================
@@ -36,10 +40,12 @@ var caption;
 |   +  Initialize socket here --
 |=================================================================
 */
-http.listen(3000, function() {
-    console.log('>>    WhatsApp Vampire sleeping dead on port: 3000');
-});
+const server = express()
+  .use(express.static(path.join(__dirname, 'example')))
+  .get('/' ,(req, res) => res.sendFile(INDEX) )
+  .listen(port, () => console.log(`VampireWhatsApp listening on port ${ port }`));
 
+const io = socketIO(server);
 
 /*
 |=================================================================
@@ -102,6 +108,17 @@ io.on('connection', socket => {
             io.emit('get_QR_code_response', data);
         });
     });
+
+    /*
+    |-------------------------------------------------------------
+    |   ~  to get login status
+    |-------------------------------------------------------------
+    */
+   socket.on('get_login_status', () => {
+    isLoggedIn(data => {
+        io.emit('is_logged_in_response', data);
+    });
+});
 });
 
 /*
@@ -244,9 +261,28 @@ function getUnreadReplies(done) {
 |=================================================================
 */
 function getQRCode(done) {
-    var scriptToGetQRcode = "var callback = arguments[arguments.length - 1];window.WAPI.getQRcodesrc(function(data){callback(data);})";
-    var r = driver.executeAsyncScript(scriptToGetQRcode).then(data => {
-        done(data);
+    if(!isLoggedIn()) {
+        var scriptToGetQRcode = "var callback = arguments[arguments.length - 1];window.WAPI.getQRcodesrc(function(data){callback(data);})";
+        var r = driver.executeAsyncScript(scriptToGetQRcode).then(data => {
+            done(data);
+        });
+    } else {
+        done(false);
+    }
+}
+
+/*
+|=================================================================
+|   +  To get login status 'is_logged_in_response' event
+|=================================================================
+*/
+function isLoggedIn(done) {
+    var scriptToGetLoginStatus = "var callback = arguments[arguments.length - 1];window.WAPI.isLoggedIn(function(data){callback(data);})";
+    var r = driver.executeAsyncScript(scriptToGetLoginStatus).then(data => {
+        if(done !== undefined)
+            done(data);
+        else
+            return data;
     });
 }
 

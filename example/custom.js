@@ -6,6 +6,12 @@ function getQRcode(){
 	});
 }
 
+function isLoggedIn(){
+	socket.emit("get_login_status", {
+		payload: "NOT REQUIRED"
+	});
+}
+
 function sendTextMessage(){
 	socket.emit("send_text_message", {
 		message: document.getElementById('msg').value,
@@ -51,7 +57,14 @@ function displayUnread(data){
 }
 
 function displayQRcode(data) {
-	document.getElementById("qr_img").src = data;
+	console.log('dispdisp');
+	var img_ele = document.createElement('IMG');
+	img_ele.src = data;
+	var qr_img = document.getElementById('qr_img');
+	if(!qr_img.hasChildNodes())
+		qr_img.appendChild(img_ele);
+	else
+		qr_img.replaceChild(img_ele ,qr_img.childNodes[0]);
 }
 
 socket.on("get_unread_response", (data) => {
@@ -59,9 +72,17 @@ socket.on("get_unread_response", (data) => {
 });
 
 socket.on("get_QR_code_response", (data) => {
-	displayQRcode(data);
+	if(data != false)
+		displayQRcode(data);
+	else
+		document.getElementById('qr_img').innerHTML = '<h3>Logged In</h3>';
+})
+
+socket.on("is_logged_in_response", (data) => {
+	alert(data);
 })
 
 setInterval(() => {
 	getUnreadReplies();
+	getQRcode();
 }, 1000);

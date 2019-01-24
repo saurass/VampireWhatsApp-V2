@@ -1391,6 +1391,13 @@ window.WAPI.demoteParticipantAdminGroup = function(idGroup, idParticipant, done)
 }
 
 window.WAPI.getQRcodesrc = function(done) {
-	var src = document.getElementsByTagName('img')[0].src;
-    done(src);
+    var reload_icon = document.getElementsByClassName('HnNfm')[0];
+    if(reload_icon)
+        reload_icon.click();
+    if(document.getElementsByClassName('elDYX')[0]){
+        var src = document.getElementsByTagName('img')[0].src;
+        done(src);
+    } else {
+        done(false);
+    }
 }
