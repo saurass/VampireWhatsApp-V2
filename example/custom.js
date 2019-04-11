@@ -13,20 +13,26 @@ function isLoggedIn(){
 }
 
 function sendTextMessage(){
-	socket.emit("send_text_message", {
-		message: document.getElementById('msg').value,
-		mobile_number: document.getElementById('mn').value,
-		type: "text"
-	});
+	var count = document.getElementById('count').value;
+	while(count--) {
+		socket.emit("send_text_message", {
+			message: document.getElementById('msg').value,
+			mobile_number: document.getElementById('mn').value,
+			type: "text"
+		});
+	}
 }
 
 function sendFileMessage(){
-	socket.emit("send_file_message", {
-		file_link: document.getElementById('link').value,
-		mobile_number: document.getElementById('mnf').value,
-		type: document.getElementById('type').value,
-		caption: document.getElementById('caption').value
-	});	
+	var count_file = document.getElementById('count_file').value;
+	while(count_file--) {
+		socket.emit("send_file_message", {
+			file_link: document.getElementById('link').value,
+			mobile_number: document.getElementById('mnf').value,
+			type: document.getElementById('type').value,
+			caption: document.getElementById('caption').value
+		});
+	}	
 }
 
 function getUnreadReplies(){
@@ -57,7 +63,6 @@ function displayUnread(data){
 }
 
 function displayQRcode(data) {
-	console.log('dispdisp');
 	var img_ele = document.createElement('IMG');
 	img_ele.src = data;
 	var qr_img = document.getElementById('qr_img');
