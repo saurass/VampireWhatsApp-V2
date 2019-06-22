@@ -50,8 +50,12 @@ function sendSeenRep(payload) {
 function displayUnread(data){
 	var html = '';
 	data.forEach(chat => {
-		var payload = chat.messages[0].from;
-		var str = '<h3>Chat -- ' + chat.chat + '<br><button onclick="sendSeenRep(\'' + payload + '\')">Send Seen</button></h3>';
+		var payload = chat.messages;
+		if(!payload.length) {
+			var str = '<h3>Chat -- ' + chat.chat + '</h3><p style="color: red">You have turned this contact silent</p>'
+		} else {
+			var str = '<h3>Chat -- ' + chat.chat + '<br><button onclick="sendSeenRep(\'' + payload[0].from + '\')">Send Seen</button></h3>';
+		}
 		var msgs = '';
 		chat.messages.forEach(msg => {
 			msgs = msgs + 'contact -- ' + msg.contact + '<br>from -- ' + msg.from + '<br>message -- ' + msg.message + '<br><br>';
