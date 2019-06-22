@@ -1427,7 +1427,7 @@ window.WAPI.demoteParticipantAdminGroup = function (idGroup, idParticipant, done
 }
 
 window.WAPI.getQRcodesrc = function(done) {
-    var reload_icon = document.getElementsByClassName('HnNfm')[0];
+    var reload_icon = document.getElementsByClassName('_1MOym')[0];
     if(reload_icon)
         reload_icon.click();
     if(document.getElementsByClassName('_1pw2F')[0]){
